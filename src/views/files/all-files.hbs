@@ -1,0 +1,163 @@
+<h1 class="mx-auto ">Tus archivos</h1>                    
+<hr>
+<div class="card mt-2">
+    <div class="mt-4 ml-2 mr-2">
+        <form action="/upload" method="POST" enctype="multipart/form-data"> <input type="file" name="filetoupload" >
+          </label>                 
+          <button type="submit" class="btn btn-success btn-group  float-right mb-4">Subir archivo</button>
+        </form>
+    </div>
+</div>
+<br><br><br>
+<div class="row align-items-center mb-2">
+    <script>
+      var arr = [];
+    </script>
+
+      {{#each files}}
+          <!--- <div class="col-md-4">
+                  <li id="book/uploads/{{user}}/{{name}}" class="mx-5 list-group">
+                      <h1 id="title/uploads/{{user}}/{{name}}" class="display-6 mx-auto text-center"></h1>
+                      <image id="cover/uploads/{{user}}/{{name}}" class= "rounded d-block" width="300px"/>
+                      <p id="texto/{{user}}/{{name}}" hidden>/uploads/{{user}}/{{name}}</p>
+                      <p id="fileid{{_id}}" style="font-size: 12px; text-color: lightgray; visibility: hidden;">{{_id}}</p>
+                      
+                      <div class="col-md-12 text-center">
+  
+                        <!--- <form action="/download/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-primary btn-group  float-right mr-2">Descargar archivo</button>-->
+                        <!--- </form>
+                        <form action="/delete/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-danger btn-group  float-right mr-2">Borrar</button>
+                        </form>
+                        <form action="" method="GET">                      
+                            <button onclick="copyToClipboard('#fileid')" class="btn btn-secondary btn-group  float-right mr-2">Compartir</button>
+                        </form>  
+                        <form action="/read/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-primary btn-group  float-right mr-2">Leer</button>
+                        </form>  
+                          <!---  <button id="btn_show{{_id}}" onclick="showCode('fileid{{_id}}', 'btn_hide{{_id}}' ,'btn_show{{_id}}')" class="btn btn-light btn-group float-right mr-2">Mostrar código</button>
+                            <button id="btn_hide{{_id}}" onclick="hideCode('fileid{{_id}}', 'btn_hide{{_id}}' ,'btn_show{{_id}}')" class="btn btn-light btn-group float-right mr-2" style="visibility: hidden">Ocultar código</button>-->
+
+                      <!--- </div>
+                      
+                  </li>
+            </div>-->
+    <div class="col-md-4">
+         <div class=" mt-2">
+            <div class="card-body">
+                <h6 id="title/uploads/{{user}}/{{name}}" class="display-6 mx-auto text-center"></h6>
+                <p id="creator/uploads/{{user}}/{{name}}" class="display-9 mx-auto text-center"></p>
+                <image id="cover/uploads/{{user}}/{{name}}" class= "shadow rounded d-block" width="300px"/>
+                <p id="texto/{{user}}/{{name}}" hidden>/uploads/{{user}}/{{name}}</p>
+                    <div id="bookButtons" class="align-items-center mt-2">
+                      <form action="/delete/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-danger btn-group  float-right mr-2">Borrar</button>
+                        </form>
+                        <form action="" method="GET">                      
+                            <button onclick="copyToClipboard('#fileid')" class="btn btn-secondary btn-group  float-right mr-2">Compartir</button>
+                        </form>  
+                        <form action="/read/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-primary btn-group float-right mr-2">Leer</button>
+                        </form>  
+                    </div>
+                        
+            </div>
+        </div>
+    </div> 
+ <script>
+    var book = ePub();
+    var rendition;
+    var valor;
+    var iter = 0;
+    var user = "{{user}}";
+    arr.push("{{name}}");
+  </script>
+
+  {{/each}}
+
+  </div>
+  <script>
+  var arrayLength = arr.length;
+  window.onload = showBook(iter, arrayLength);
+
+  
+  async function showMetadata() {
+
+    Loop1:
+    for (var i = 0; i < arrayLength; i++) {
+      await showBook(i);
+      continue Loop1;
+      
+    }
+  }  
+
+  function showFinal(iter,arrayLength) {
+    console.log("Realizado." + iter);
+    console.log("ArrayLength:" + arrayLength);
+    if(iter < arrayLength){
+      iter ++;
+      showBook(iter);
+    }
+    /*for (var i = 0; i < arrayLength-1; i++) {
+      showBook(i);
+    }*/
+  }
+
+
+  function showBook(e) {
+        //var myStuff = loadFile("test.epub");
+    console.log('hola li ' + e + arr.length);  
+        var xhr = new XMLHttpRequest();
+        valor = document.getElementById("texto/" + user + "/" + arr[e]).innerHTML;
+        var bla = 'http://localhost:3000' + valor;
+        xhr.open('get', bla);
+        xhr.responseType = 'blob'; // directly as an ArrayBuffer
+        xhr.onload = function(el){
+          var reader = new FileReader();
+          reader.onload = openBook;
+          console.log("Bla2 " + bla);
+          reader.readAsArrayBuffer(this.response);
+        }
+        xhr.send();
+
+  }
+
+  function openBook(e){
+    var bookData = e.target.result;
+    book.open(bookData, "binary");
+    console.log("Bla3 " + valor);
+    book.loaded.metadata.then(function(meta){
+      var $title = document.getElementById("title" + valor);
+      var $author = document.getElementById("creator" + valor);
+      var $cover = document.getElementById("cover" + valor);
+  
+      
+      $cover.src = meta.cover;
+      $title.textContent = meta.title;
+      $author.textContent = meta.creator;
+
+      if (book.archive) {
+        book.archive.createUrl(book.cover)
+          .then(function (url) {
+            $cover.src = url;
+          })
+      } else {
+        $cover.src = book.cover;
+      }
+    }).then( function(e) {
+   
+    if( iter < arr.length) {
+      console.log('Titulo ' + arr.length + " " + iter);  
+      iter++;
+      showBook(iter)
+      book= ePub();
+    }
+    });
+
+
+
+  }
+
+  </script>
+

@@ -1,0 +1,16 @@
+<h1 class="mx-auto ">Mi perfil</h1>
+<hr>
+<div class="row mb-2">
+    {{#if user}}
+
+            <h4 class="title-card d-flex justify-content-between">
+                {{user.name}} <!--<a href="/notes/edit/{{_id}}"><i class="fas fa-edit"></i></a>-->
+            </h4>
+            <p>{{user.email}}</p>
+            <p>{{user.date}}</p>
+            <!--<form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">Borrar</button>
+            </form>-->
+    {{/if}}
+</div>    

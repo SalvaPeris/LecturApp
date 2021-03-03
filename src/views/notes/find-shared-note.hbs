@@ -1,0 +1,44 @@
+
+<h1 class="mx-auto ">Tengo un código</h1>
+<hr>
+<div>
+    <br>
+    <h4 class="mx-auto font-weight-light">Desde este menú, podrás acceder al archivo que han compartido contigo. Introduciendo el código que te han facilitado podrás descargarte el archivo o, en su caso, leer la nota.</h6>
+<br>
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card mt-4 text-center">
+            <div class="card-header">
+                <h2>Nota</h2>
+            </div>
+            <div class="card-body">
+                <form action="/notes/find" method="POST">
+                     <div class="form-group">
+                        <input type="text" class="form-control" name="noteid" placeholder="Código nota" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mx-auto">
+        <div class="card mt-4 text-center">
+            <div class="card-header">
+                <h2>Archivo</h2>
+            </div>
+            <div class="card-body">
+                <form action="/files/find" method="POST">
+                     <div class="form-group">
+                        <input type="text" class="form-control" name="fileid" placeholder="Código archivo" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

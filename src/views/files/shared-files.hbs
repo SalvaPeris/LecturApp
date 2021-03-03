@@ -1,0 +1,21 @@
+<h1 class="mx-auto ">Tu archivo compartido</h1>
+<hr>
+<br><br>
+<div class="row mb-2">
+    <ul class="list-group">
+    {{#each files}}
+                <li class="list-group-item">{{name}}
+                    <form action="/download/{{user}}/{{name}}" method="GET">                      
+                            <button type="submit" class="btn btn-primary btn-group  float-right">Descargar archivo</button>
+                    </form>
+                </li>
+    {{else}}
+    </ul>
+</div>
+    <div class="card mx-auto">
+        <div class="card-body">
+            <h2>Hola, {{user.name}}</h2>
+            <p class="lead">No hay archivos. </p>
+        </div>
+    </div>  
+    {{/each}}

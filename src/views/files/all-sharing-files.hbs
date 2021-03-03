@@ -1,0 +1,16 @@
+<h1 class="mx-auto ">Tus notas para compartir</h1>
+<hr>
+<div class="row mb-2">
+    {{#if files}}
+    <li class="list-group-item">{{files.name}} <br>
+    <p id="fileid">{{files._id}}</p>
+                    <form action="" method="GET">                      
+                            <button onclick="copyToClipboard('#fileid')" class="btn btn-secondary btn-group  float-right mr-2">Copiar</button>
+                    </form>
+    </li>
+    {{/if}}
+</div>
+<div class="button-exit mx-auto">
+    <a href="/files" class="btn btn-danger">Volver
+    </a>   
+</div>

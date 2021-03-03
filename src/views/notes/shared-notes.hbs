@@ -1,0 +1,21 @@
+<h1 class="mx-auto ">Tu nota compartida</h1>
+<hr>
+<div class="row mb-2">
+    {{#each notes}}
+    <div class="col-md-3">
+         <div class="card shadow mt-2">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">
+                    {{title}}
+                </h4>
+                <p>{{description}}</p>
+            </div>
+        </div>
+    </div> 
+    {{/each}}
+</div>
+<br>
+<br>
+<div class="button-exit mx-auto">
+    <a href="/" class="btn btn-danger">Salir</a>   
+</div>

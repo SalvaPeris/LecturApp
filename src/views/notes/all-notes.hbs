@@ -1,0 +1,47 @@
+<h1 class="mx-auto ">Tus notas</h1>
+<hr>
+<div class="row mb-2">
+    {{#each notes}}
+    <div class="col-md-3">
+         <div class="card shadow mt-2">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">
+                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+                </h4>
+                <p>{{description}}</p>
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger btn-block btn-sm" type="submit">Borrar</button>
+                </form>
+            </div>
+        </div>
+    </div> 
+    {{else}}
+    <div class="card mx-auto">
+        <div class="card-body">
+            <h2>Hola, {{user.name}}</h2>
+            <p class="lead">No hay ninguna nota. </p>
+            <p>Crea una nueva nota</p>
+            <a href="/notes/add" class="btn btn-success btn-block">Crear</a>
+        </div>
+    </div>  
+    {{/each}}
+    {{#if notes}}
+    <div class="col-md-3 ">
+         <div class="card shadow mt-2" id="card-low-opacity">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between">
+                    Nueva
+                </h4>
+                <p>Crea una nota </p>
+                <a href="/notes/add" class="btn btn-primary btn-block">Crear</a>
+            </div>
+        </div>
+    </div> 
+    </div>
+    <div class="button-sharing mx-auto mt-5">
+        <a href="/notes/sharing" class="btn btn-danger">Compartir
+        </a>   
+    </div>
+    {{/if}}
+

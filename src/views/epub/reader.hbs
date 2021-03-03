@@ -1,0 +1,96 @@
+{{#if epub}}
+  <h1 id="title" class="display-4 mx-auto"></h1>
+  <p id="texto" hidden>{{epub}}</p>
+  <div id="viewer" class="spreads mx-auto"></div>
+  <a id="prev" href="#prev" class="arrow">‹</a>
+  <a id="next" href="#next" class="arrow">›</a>
+
+  <script>
+
+  var book = ePub();
+  var rendition;
+
+  window.addEventListener('load', function (e) {
+        //var myStuff = loadFile("test.epub");
+        console.log('hola');
+        var xhr = new XMLHttpRequest();
+        var valor = document.getElementById("texto").innerHTML;
+        var bla = 'http://localhost:3000' + valor;
+        console.log(bla);
+        xhr.open('get', bla);
+        xhr.responseType = 'blob'; // directly as an ArrayBuffer
+        xhr.onload = function(e){
+          var reader = new FileReader();
+          reader.onload = openBook;
+          reader.readAsArrayBuffer(this.response);
+        }
+        xhr.send();
+  });
+
+
+  function openBook(e){
+    var bookData = e.target.result;
+    var next = document.getElementById("next");
+    var prev = document.getElementById("prev");
+
+    book.open(bookData, "binary");
+
+    rendition = book.renderTo("viewer", {
+      width: "100%",
+      height: 600
+    });
+
+    rendition.display();
+	
+	var keyListener = function(e){
+
+      // Left Key
+      if ((e.keyCode || e.which) == 37) {
+        rendition.prev();
+      }
+
+      // Right Key
+      if ((e.keyCode || e.which) == 39) {
+        rendition.next();
+      }
+
+    };
+
+    rendition.on("keyup", keyListener);
+    rendition.on("relocated", function(location){
+      console.log(location);
+    });
+
+    next.addEventListener("click", function(e){
+      rendition.next();
+      e.preventDefault();
+    }, false);
+
+    prev.addEventListener("click", function(e){
+      rendition.prev();
+      e.preventDefault();
+    }, false);
+
+    document.addEventListener("keyup", keyListener, false);
+  }
+
+  book.loaded.metadata.then(function(meta){
+      var $title = document.getElementById("title");
+      var $author = document.getElementById("creator");
+      var $cover = document.getElementById("cover");
+      
+      $cover.src = meta.cover;
+      $title.textContent = meta.title;
+      //$author.textContent = meta.creator;
+
+      if (book.archive) {
+        book.archive.createUrl(book.cover)
+          .then(function (url) {
+            $cover.src = url;
+          })
+      } else {
+        $cover.src = book.cover;
+      }
+    });
+  </script>
+{{/if}}
