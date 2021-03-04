@@ -15,9 +15,3 @@ services:
         image: mongo
         ports: 
             - "27018:27017"
-        
-<<<<<<< HEAD
-            
-=======
-            
->>>>>>> e0a7f9f8dca6674b4faa81136214c0b4b66b40a4
