@@ -1,3 +1,5 @@
+//Este archivo no se utiliza porque el Docker sólo tiene un container que es la web. La base de datos está implementada en Cosmos DB de Azure.
+
 version: "3"
 
 services: 
