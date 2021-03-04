@@ -1,0 +1,19 @@
+version: "3"
+
+services: 
+    web:
+        container_name: lecturapp
+        restart: always
+        build: .
+        ports:
+            - "5000:3000"
+        links:
+          - mongo    
+        
+    mongo:
+        container_name: mymongodb
+        image: mongo
+        ports: 
+            - "27018:27017"
+        
+            
