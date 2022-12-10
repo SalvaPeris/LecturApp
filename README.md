@@ -1,2 +1,2 @@
 # LecturApp
-Aplicación diseñada para leer epubs en línea.
+Application designed to read epubs and pdfs online
