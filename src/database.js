@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
  .then(db => console.log('DB is connected'))
  .catch(err => console.error(err));*/
 
-mongoose.connect("mongodb+srv://salva:salvadb@cluster0.nkpxr.mongodb.net/lecturadb?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://....@cluster0.nkpxr.mongodb.net/lecturadb?retryWrites=true&w=majority", {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false
